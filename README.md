@@ -1,6 +1,6 @@
 # DeepLearning Study
+- 딥러닝의 전반적인 것
 
-- Linear Regression과 Logistic Regression: 지도 학습
 ## Linear Regression  
 1. 수치형 설명변수 X와 연속형 숫자로 이루어진 종속변수 Y 간의 관계를 선형으로 가정하고, 이를 가장 잘 표현할 수 있는 회귀계수를 데이터로부터 추정하는 모델. 
 2. Activation Function: Y=Wx+b  
@@ -18,3 +18,13 @@
 3. Cost Function: BCE, CE  
 3-1) BCE: Binary Cross Entropy (이항 분류)  
 3-2) CE: Cross Entropy (다중 분류)
+
+## Gradient Vanishing/Exploding 문제
+<해결법>
+1. Change Activation function: sigmoid를 Relu로
+2. Careful initialization: 초기화(Weight initialization) 
+3. Small learning rate
+4. Batch Normalization
+- Internal Covariate Shift: 입력과 출력의 분포가 다른 것, 한 레이어마다 입력과 출력을 가지고 있는데, 레이어끼리의 Covariate Shift가 발생한다. 이를 해결하기 위해서, 각 레이어마다 normalization하는 레이어를 두어서 변형된 분포가 나오지 않게 하는 것으로, 미니 배치들마다 normalization 해 주는 것이다.
+- Network의 각 층이나 Activation마다 input의 distribution이 달라지는 현상으로, 이를 막기 위해 간단하게 각 층의 input의 distribution을 평균 0, 표준편차 1인 input으로 normalize 시킨다. (각 mini-batch의 mean과 variance를 구하여 normalize한다.)
+- Batch Normalization은 activation function 이전에 주로 사용한다.
