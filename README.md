@@ -1,3 +1,7 @@
 # Study Document
-## Computer Science
+
+ - Machine Learning
+ - Java
+ - JavaScript
+ 
 
