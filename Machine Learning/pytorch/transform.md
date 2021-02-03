@@ -19,7 +19,11 @@ train_transforms=transforms.Compose{[
 3. Resize: 이미지 사이즈를 size로 변경한다.
 4. CenterCrop: 가운데 부분을 size 크기로 자른다.
 5. ToTensor: 이미지 데이터를 tensor로 바꿔준다.
-6. Normalize: 이미지를 평균, 표준편차를 이용해 정규화한다.
+6. Normalize: **ToTensor()이후에 사용해야 한다!** 이미지를 평균, 표준편차를 이용해 정규화한다. 여기서 사용한 mean, std의 파라미터 값은 ImageNet에서 사용한 값인데, 이 값을 이용하는 것이 관습이다. 
+( _They are calculated based on millions of images.  
+    If you want to train from scratch on your own dataset, you can calculate the new mean and std.   
+     Otherwise, using the Imagenet pretrianed model with its own mean and std is recommended._
+)  
 의 순서로 PIL image를 tensor로 변경한다.  
 
 ## Datasets
