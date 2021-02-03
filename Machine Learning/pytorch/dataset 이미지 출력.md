@@ -19,3 +19,9 @@ def process():
    
 process()
 ```
+혹은 iteration을 이용해서 DataLoader에서 한 배치씩 꺼낸다.
+```
+data_iter=iter(train_loader) # iteration --> 한 batch씩 꺼내어 확인
+images, labels=data_iter.next()
+custom_imshow(images[0])
+```
