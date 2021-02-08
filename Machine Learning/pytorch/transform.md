@@ -26,6 +26,21 @@ train_transforms=transforms.Compose{[
 )  
 의 순서로 PIL image를 tensor로 변경한다.  
 
+### 함수 추가 설명
+- transforms.ToPILImage() - csv 파일로 데이터셋을 받을 경우, PIL image로 바꿔준다.
+- transforms.CenterCrop(size) - 가운데 부분을 size 크기로 자른다.
+- transforms.Grayscale(num_output_channels=1) - grayscale로 변환한다.
+- transforms.RandomAffine(degrees) - 랜덤으로 affine 변형을 한다.
+- transforms.RandomCrop(size) -이미지를 랜덤으로 아무데나 잘라 size 크기로 출력한다.
+- transforms.RandomResizedCrop(size) - 이미지 사이즈를 size로 변경한다
+- transforms.Resize(size) - 이미지 사이즈를 size로 변경한다
+- transforms.RandomRotation(degrees) 이미지를 랜덤으로 degrees 각도로 회전한다.
+- transforms.RandomResizedCrop(size, scale=(0.08, 1.0), ratio=(0.75, 1.3333333333333333)) - 이미지를 랜덤으로 변형한다.
+- transforms.RandomVerticalFlip(p=0.5) - 이미지를 랜덤으로 수직으로 뒤집는다. p =0이면 뒤집지 않는다.
+- transforms.RandomHorizontalFlip(p=0.5) - 이미지를 랜덤으로 수평으로 뒤집는다.(글자 이미지를 데이터에 넣을 경우, 뒤집기 설정은 넣지 않는 것이 좋을듯?)
+- transforms.ToTensor() - 이미지 데이터를 tensor로 바꿔준다.
+- transforms.Normalize(mean, std, inplace=False) - 이미지를 정규화한다.
+
 ## Datasets
 - 데이터셋 불러오기
 ```
@@ -36,10 +51,10 @@ _데이터셋 종류_
 MNIST, Fashion-MNIST, KMNIST, EMNIST, QMNIST, FAKEDATA, COCO, LSUN, IMAGENET, CIFAR, SVHN 등
 
 _파라미터_  
-1. root: 데이터셋을 저장할 디렉토리 위치
-2. train: 다운받을 데이터셋 종류(train/val/test) 
-3. download-True할 경우, 인터넷에서 데이터셋을 root 경로에 다운받는다. 데이터가 있을 경우, 재다운하지 않는다.
-4. transform-이미지를 변경한다.
+1. **root**: 데이터셋을 저장할 디렉토리 위치
+2. **train**: 다운받을 데이터셋 종류(train/val/test) 
+3. **download**-True할 경우, 인터넷에서 데이터셋을 root 경로에 다운받는다. 데이터가 있을 경우, 재다운하지 않는다.
+4. **transform**-이미지를 변경한다.
 
 위의 train_transforms는 아직 실제로 값을 변경하지는 않고, 이 transform 객체를 **dataset**에 연결해주면 dataset이 image를 loading할 때, 
 이 transform 과정을 통해 tensor로 만들어 준다.
@@ -53,6 +68,7 @@ root에 image가 있는 directory의 path를 설정하고, transform에 위에�
 **ImageFoler**는 **DataLoader**가 data를 불러올 대상(root)와 방법(transform)을 정의하는 부분이라고 할 수 있다.  
 
 ## DataLoader
+- 다운 받은 dataset은 DataLoader 함수를 이용해야 모델에 사용할 수 있다.
 ```
 train_loader = torch.utils.data.DataLoader(
     train_dataset,
@@ -63,8 +79,9 @@ train_loader = torch.utils.data.DataLoader(
 ```
 DataLoader에 위 ImageFoler를 할당하고, 한 번에 불러올 batch_size를 지정한다.  
 _파라미터_
-1. num_workers: 몇 개의 subprocesses를 가동시킬것인지 정한다.
-2. drop_last: 배치별로 묶고 남은 데이터를 버릴지(True) 여부를 정한다.
+1. **batch_size**: 모델을 한 번 학습시킬 때, 몇 개의 데이터를 넣을지 정한다. 1 배치가 끝날 때마다 파라미터를 조정한다.
+2. **num_workers**: 몇 개의 subprocesses를 가동시킬것인지 정한다.
+3. **drop_last**: 배치별로 묶고 남은 데이터를 버릴지(True) 여부를 정한다.
 
 이제 이 DataLoader에서 batch_size만큼 image를 (transform으로 정의한 과정을 통해 tensor로 불러올 수 있다.)
 
